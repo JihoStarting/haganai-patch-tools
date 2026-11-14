@@ -39,6 +39,12 @@ new_script/      gpda.bms (skrip QuickBMS untuk container GPDA)
 
 File besar dan hasil build tidak di-push (lihat `.gitignore`).
 
+## Kebutuhan
+
+- Python 3.11 atau lebih baru
+- Tidak ada dependensi pihak ketiga (hanya pustaka standar)
+- Salinan game milikmu sendiri (ISO PSP, ULJS00459) dan emulator PPSSPP untuk mengetes
+
 ## Alur kerja
 
 ```
@@ -97,6 +103,7 @@ Nilai `kind`: `narration/dialog` dan `choice/menu` dipatch; scene title dan bant
 ## Catatan
 
 Proyek penggemar, tidak berafiliasi dengan pemegang hak cipta game. Hak atas game dan teks aslinya milik pemegang aslinya.
+
 
 
 
