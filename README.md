@@ -32,9 +32,9 @@ scripts/         pipeline, alat CSV, patcher menu/EBOOT/nama pembicara
   core/          parser GPDA (gpda_v2.py), pipeline versi awal, validator
   envpsp_variants/  patcher envpsp.dat dan EBOOT
   block_patch/   patcher sprite minigame
-  Ui menu/       patcher sprite menu
+  ui_menu/       patcher sprite menu
 docs/            catatan teknis dan laporan investigasi
-new script/      gpda.bms (skrip QuickBMS untuk container GPDA)
+new_script/      gpda.bms (skrip QuickBMS untuk container GPDA)
 ```
 
 File besar dan hasil build tidak di-push (lihat `.gitignore`).
@@ -66,7 +66,7 @@ Opsi lebar kolom (`--width`, `--nwidth`, `--apos-w`) dan nilai yang terbukti di 
 | `patch_names.py` | Ganti nama pembicara di RES yang sudah dipatch (`--check` dulu, aman diulang) |
 | `patch_eboot.py` | Geser posisi Y teks di EBOOT terdekripsi agar 3 baris muat |
 | `patch_envpsp.py` | Ganti string dialog konfirmasi di `envpsp.dat` |
-| `Ui menu/menu_patch/patch_menu.py` | Pasang sprite menu Inggris (ulangi tiap build RES baru) |
+| `ui_menu/menu_patch/patch_menu.py` | Pasang sprite menu Inggris (ulangi tiap build RES baru) |
 | `block_patch/patch_block.py` | Pasang sprite minigame |
 | `csv_tools.py` | Cek dan perbaiki CSV (panjang, pilihan, encoding) |
 | `dump.py`, `cut_gpda.py`, `cari_string.py` | Bongkar dan periksa isi game (baca-saja) |
@@ -97,5 +97,6 @@ Nilai `kind`: `narration/dialog` dan `choice/menu` dipatch; scene title dan bant
 ## Catatan
 
 Proyek penggemar, tidak berafiliasi dengan pemegang hak cipta game. Hak atas game dan teks aslinya milik pemegang aslinya.
+
 
 
