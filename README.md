@@ -1,4 +1,4 @@
-# Haganai Portable: Patch Teks Inggris (JP → EN)
+﻿# Haganai Portable: Patch Teks Inggris (JP → EN)
 
 by **KangJiho**
 
@@ -12,8 +12,8 @@ Per catatan progres terakhir (2026-10-24). Detail lengkap ada di [`scripts/READM
 
 | Bidang | Status |
 |---|---|
-| Terjemahan dialog (15.257 baris) | 100%, `translation/haganai_dialogue_EN_v30.csv` |
-| Terjemahan sisa (7.436 baris) | 100%, `translation/haganai_remaining_EN_full_v30.csv` |
+| Terjemahan dialog (15.257 baris) | 100% (CSV tidak dipublikasikan) |
+| Terjemahan sisa (7.436 baris) | 100% (CSV tidak dipublikasikan) |
 | Injeksi ke game | 93,1% (21.128 dari 22.693 instruksi). Judul scene (673) dan banter (610) masih Jepang |
 | Kotak teks 3 baris | Berhasil lewat geser Y di EBOOT (`patch_eboot.py`, Y13) |
 | Menu judul | Inggris |
@@ -27,7 +27,7 @@ Masalah terbuka: pilihan (choice) belum sejajar dengan balon setelah geser Y, pe
 ## Struktur repo
 
 ```
-translation/     CSV terjemahan versi terbaru (v30)
+translation/     (tidak dipublikasikan; berisi teks asli game)
 scripts/         pipeline, alat CSV, patcher menu/EBOOT/nama pembicara
   core/          parser GPDA (gpda_v2.py), pipeline versi awal, validator
   envpsp_variants/  patcher envpsp.dat dan EBOOT
@@ -97,3 +97,4 @@ Nilai `kind`: `narration/dialog` dan `choice/menu` dipatch; scene title dan bant
 ## Catatan
 
 Proyek penggemar, tidak berafiliasi dengan pemegang hak cipta game. Hak atas game dan teks aslinya milik pemegang aslinya.
+
