@@ -18,3 +18,4 @@ script_output/
 scripts/csv/
 scripts/*.txt
 originals*.txt
+*.log.txt
