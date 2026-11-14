@@ -1,0 +1,104 @@
+LAPORAN INVESTIGASI CRASH PATCHING HAGANAI PORTABLE
+
+1. TEMUAN CRASH
+
+PPSSPP mengalami crash dengan:
+- PC = 0x00000006 → eksekusi menuju alamat tidak valid.
+- RA = 0x08834ACC → alamat fungsi pemanggil sebelum crash.
+- Bad memory access pada 0x08, 0x90, dan 0x94 → indikasi pointer/struct rusak.
+- Crash terjadi setelah game membaca 12.288 byte dari RES.DAT pada offset 0x0D71C800.
+
+Pola ini lebih mengarah ke pointer/metadata yang tidak valid, bukan buffer overflow teks.
+
+2. VALIDASI RES.DAT
+
+Hasil validasi:
+- 4.817 container GPDA valid.
+- Entry 0011ess0 yang diproses saat crash juga valid.
+- 25/25 baris lolos validasi.
+- .obj.gz berhasil didekompresi dan teks Inggris terbaca benar.
+- Struktur GPDA dan ukuran resource valid.
+
+Kesimpulan: masalah bukan pada struktur GPDA/TOC atau hasil kompresi teks.
+
+3. TEMUAN first.dat / seekmap.dat
+
+first.dat ternyata juga merupakan container GPDA.
+
+Di dalamnya ditemukan seekmap.dat, yang berupa gzip dan setelah didekompresi menghasilkan tabel metadata human-readable berisi:
+name | offset | size | checksum | child_count
+
+Contoh entry:
+script.dat
+offset=225509376
+size=166508544
+checksum=3815409883
+child_count=674
+
+Nilai offset, size, dan child_count sesuai dengan data RES.DAT.
+
+Temuan penting: game memiliki index/metadata eksternal selain TOC GPDA di RES.DAT.
+
+4. HIPOTESIS UTAMA
+
+RES.DAT sudah dipatch, tetapi seekmap.dat kemungkinan masih menyimpan metadata lama.
+
+Kemungkinan ketidaksesuaian:
+- offset
+- size
+- checksum
+
+Hal ini dapat membuat engine membaca atau memvalidasi resource dengan metadata yang sudah tidak sesuai dan akhirnya menghasilkan pointer/struct rusak.
+
+5. RENCANA INVESTIGASI
+
+Langkah 1 — Tes checksum
+Perbarui hanya offset dan size di seekmap.dat agar sesuai dengan RES_patched.DAT, tetapi biarkan checksum lama.
+
+- Jika game berjalan → checksum kemungkinan tidak divalidasi.
+- Jika tetap crash → checksum kemungkinan ikut divalidasi.
+
+Ini adalah tes paling cepat dan murah.
+
+Langkah 2 — Reverse checksum
+Gunakan resource original dan checksum original dari seekmap.dat.
+
+Uji kandidat:
+- CRC32
+- CRC32C
+- Adler-32
+- FNV-1/FNV-1a 32-bit
+- SUM32
+- XOR32
+- rolling sum/XOR per DWORD
+
+Jika salah satu cocok, hitung ulang checksum menggunakan resource hasil patch.
+
+Langkah 3 — Verifikasi 0083yoz0
+Bandingkan entry 0083yoz0 sebelum dan sesudah patch:
+offset / size / checksum
+
+Tujuannya mengetahui perubahan metadata dan memastikan algoritma checksum bekerja terhadap raw bytes resource.
+
+Langkah 4 — Reverse engineering EBOOT
+Jika checksum tidak cocok dengan algoritma umum:
+- Analisis EBOOT.BIN di Ghidra/IDA dengan arsitektur MIPS Allegrex.
+- Cari referensi "first.dat" atau "seekmap".
+- Trace fungsi loader yang membaca metadata.
+- Cari loop checksum seperti sum32, xor32, atau tabel CRC.
+
+Langkah 5 — Konfirmasi melalui crash
+Gunakan RA = 0x08834ACC di disassembly PPSSPP/Ghidra untuk melihat instruksi sebelum crash dan menentukan struct yang mengakses offset +0x08, +0x90, dan +0x94.
+
+Ini dapat mengonfirmasi apakah struct tersebut berasal dari metadata seekmap.dat.
+
+KESIMPULAN
+
+Struktur RES_patched.DAT sudah terbukti valid. Temuan terbesar adalah adanya first.dat → seekmap.dat yang menyimpan metadata resource secara terpisah.
+
+Fokus utama sekarang adalah menentukan apakah checksum seekmap.dat divalidasi oleh engine.
+
+Urutan paling efisien:
+Tes offset/size → brute-force checksum → verifikasi 0083yoz0 → analisis EBOOT → konfirmasi struct melalui RA/PC.
+
+File yang paling dibutuhkan untuk memulai analisis otomatis adalah seekmap.dat original, lalu resource original yang memiliki pasangan checksum tersebut.

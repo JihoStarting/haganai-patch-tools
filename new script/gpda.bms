@@ -1,0 +1,18 @@
+idstring GPDA
+get FSIZE long
+get ZERO long
+get FILES long
+get BNAME basename
+for i = 0 < FILES
+    get OFFSET long
+    get DUMMY long
+    get SIZE long
+    get NAMEPOS long
+    savepos MYOFF
+    goto NAMEPOS
+    get NAMEL long
+    getDstring FNAME NAMEL
+    goto MYOFF
+    string NAME p "%s/%s" BNAME FNAME
+    log NAME OFFSET SIZE
+next i
