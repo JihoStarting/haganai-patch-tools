@@ -98,3 +98,4 @@ Nilai `kind`: `narration/dialog` dan `choice/menu` dipatch; scene title dan bant
 
 Proyek penggemar, tidak berafiliasi dengan pemegang hak cipta game. Hak atas game dan teks aslinya milik pemegang aslinya.
 
+
