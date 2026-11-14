@@ -9,15 +9,31 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-selesai%20(final)-brightgreen)
 
-[Arsitektur](#arsitektur) · [Status](#status) · [Mulai cepat](#mulai-cepat) · [Alat](#alat) · [Format CSV](#format-csv) · [Pemecahan masalah](#pemecahan-masalah) · [Lisensi](#lisensi-dan-disclaimer)
+[Ringkasan](#ringkasan) · [Status](#status-proyek) · [Mulai cepat](#mulai-cepat) · [Alat](#alat) · [Format CSV](#format-csv) · [Pemecahan masalah](#pemecahan-masalah) · [Lisensi](#lisensi-dan-disclaimer)
 
 </div>
 
 ---
 
-> **English summary:** Reverse-engineered tooling that rebuilds the PSP game *Haganai Portable* with an English script and UI by editing `RES.DAT` directly. It includes a GPDA container parser/rebuilder, a seekmap and CRC-32 rebuilder, an EBOOT text-box patcher (3-line dialogue), and menu/minigame sprite patchers. The project is **complete**. No game assets or original text are included; you need your own legally obtained copy of the game.
+> **English summary.** Reverse-engineered tooling that rebuilds the PSP game *Haganai Portable* with an English script and UI by editing `RES.DAT` directly. It includes a GPDA container parser/rebuilder, a seekmap and CRC-32 rebuilder, an EBOOT text-box patcher (3-line dialogue), and menu and minigame sprite patchers. The project is **complete**. No game assets or original text are included; you need your own legally obtained copy of the game.
 
-> **Repo ini tidak berisi file game.** Tidak ada ISO, `RES.DAT`, `first.dat`, `EBOOT.BIN`, aset hasil ekstrak, maupun CSV terjemahan (yang memuat teks asli game). Untuk memakai alat di sini kamu perlu salinan game milikmu sendiri.
+> **Penting:** repo ini **tidak berisi file game**. Tidak ada ISO, `RES.DAT`, `first.dat`, `EBOOT.BIN`, aset hasil ekstrak, maupun CSV terjemahan (karena memuat teks asli game). Untuk memakai alat di sini, kamu memerlukan salinan game milikmu sendiri.
+
+## Daftar isi
+
+- [Ringkasan](#ringkasan)
+- [Arsitektur](#arsitektur)
+- [Status proyek](#status-proyek)
+- [Kebutuhan](#kebutuhan)
+- [Mulai cepat](#mulai-cepat)
+- [Struktur repo](#struktur-repo)
+- [Alat](#alat)
+- [Format CSV](#format-csv)
+- [Catatan teknis](#catatan-teknis)
+- [Pemecahan masalah](#pemecahan-masalah)
+- [Dokumentasi](#dokumentasi)
+- [Melanjutkan proyek](#melanjutkan-proyek)
+- [Lisensi dan disclaimer](#lisensi-dan-disclaimer)
 
 ## Ringkasan
 
@@ -32,7 +48,7 @@ Proyek ini menerjemahkan dialog, narasi, pilihan, sprite menu, dan nama pembicar
 
 ## Arsitektur
 
-Alur kerja dari salinan game sampai siap dites. `RES.DAT` yang dipatch selalu harus dibangun ulang indeksnya lewat `seekmap_rebuild.py`; `EBOOT.BIN` dan `envpsp.dat` dipatch terpisah.
+`RES.DAT` yang dipatch selalu harus dibangun ulang indeksnya lewat `seekmap_rebuild.py`. `EBOOT.BIN` dan `envpsp.dat` dipatch terpisah.
 
 ```text
                 ┌──────────────────────────┐
@@ -61,12 +77,13 @@ Alur kerja dari salinan game sampai siap dites. `RES.DAT` yang dipatch selalu ha
                 └──────────────────────────┘
 ```
 
-## Status
+## Status proyek
 
-**Proyek ini dinyatakan selesai (14 November 2026).** Hasil patch sudah memuaskan untuk dimainkan, sehingga pengembangan dihentikan di titik ini. Kode tetap terbuka untuk dipelajari atau dilanjutkan siapa saja.
+**Proyek ini dinyatakan selesai pada 14 November 2026** (perubahan kode terakhir: 24 Oktober 2026). Hasil patch sudah memuaskan untuk dimainkan, sehingga pengembangan dihentikan di titik ini. Kode tetap terbuka untuk dipelajari atau dilanjutkan siapa saja.
 
 | Bidang | Status |
 |---|---|
+| Periode pengerjaan | 7 Agustus 2026 sampai 24 Oktober 2026 (perubahan kode terakhir) |
 | Terjemahan dialog (15.257 baris) | Selesai (CSV tidak dipublikasikan) |
 | Terjemahan sisa (7.436 baris) | Selesai (CSV tidak dipublikasikan) |
 | Injeksi ke game | 93,1% (21.128 dari 22.693 instruksi) |
@@ -115,7 +132,7 @@ python seekmap_rebuild.py build OUT.DAT first.dat first_new.dat
 
 Opsi lebar kolom (`--width`, `--nwidth`, `--apos-w`) dan nilai yang terbukti di game dijelaskan di [`scripts/README.md`](scripts/README.md).
 
-**3. Tes.** Timpa juga salinan di memstick (`SAVEDATA/ULJS00459DAT/RES.DAT`), karena game membaca dari sana.
+**3. Tes.** Timpa juga salinan di memstick (`SAVEDATA/ULJS00459DAT/RES.DAT`), karena game membaca dari sana. `RES.DAT` dan `first.dat` harus berasal dari build yang sama.
 
 ## Struktur repo
 
@@ -154,7 +171,7 @@ CSV tidak didistribusikan karena memuat teks asli game. Formatnya didokumentasik
 | Dialog | `file, offset, speaker, text, clean_text, english_text` | `file` + `offset` |
 | Sisa | `scene, inst_index, opcode, str_index, kind, jp_text, jp_clean, english_text` | `scene` + `inst_index` (+ `str_index`) |
 
-Nilai `kind` yang dipatch: `narration/dialog` dan `choice/menu`. Scene title dan banter belum didukung.
+Nilai `kind` yang dipatch: `narration/dialog` dan `choice/menu`. Judul scene dan banter belum didukung.
 
 ## Catatan teknis
 
@@ -180,7 +197,7 @@ Nilai `kind` yang dipatch: `narration/dialog` dan `choice/menu`. Scene title dan
 
 ## Melanjutkan proyek
 
-Proyek ini sudah selesai dari sisi pemiliknya, tetapi terbuka untuk dilanjutkan. Titik awal yang paling berguna adalah daftar [keterbatasan](#keterbatasan-yang-diketahui) di atas, terutama dukungan judul scene dan banter, serta penyelarasan pilihan dengan balon.
+Proyek ini sudah selesai dari sisi pemiliknya, tetapi terbuka untuk dilanjutkan. Titik awal yang paling berguna adalah daftar [keterbatasan](#keterbatasan-yang-diketahui), terutama dukungan judul scene dan banter, serta penyelarasan pilihan dengan balon.
 
 ## Lisensi dan disclaimer
 
