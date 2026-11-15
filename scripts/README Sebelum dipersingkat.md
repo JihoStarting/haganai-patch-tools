@@ -1609,7 +1609,7 @@ Jadi aman pada lebar 38 (kapasitas engine sekitar 38, lihat [7.2](#72-masalah-hu
 
 ### 12.14 Minigame Block Kuzushi dan teks dialog konfirmasi (2026-10-23 malam)
 
-**1. Pencarian sprite minigame.** `out_menu.rar` dikirim lagi tetapi isinya sama dengan sebelumnya (6 container, 266 entri, tidak ada sprite minigame). Kandidat `image_block.dat` (16.134.144 byte, 7 anak) dipotong pemilik dengan `cut_gpda.py` dari folder `scripts tools` (percobaan pertama gagal karena dijalankan dari `C:\Users\Axioo Pongo`; harus `cd "D:\Reverse engginering\project haganai\scripts tools"` dulu). Hasil: `out_block\image_block.dat`; daftar container RES.DAT dikirim (`list`).
+**1. Pencarian sprite minigame.** `out_menu.rar` dikirim lagi tetapi isinya sama dengan sebelumnya (6 container, 266 entri, tidak ada sprite minigame). Kandidat `image_block.dat` (16.134.144 byte, 7 anak) dipotong pemilik dengan `cut_gpda.py` dari folder `scripts tools` (percobaan pertama gagal karena dijalankan dari `C:\Users\<user>`; harus `cd "D:\Reverse engginering\project haganai\scripts tools"` dulu). Hasil: `out_block\image_block.dat`; daftar container RES.DAT dikirim (`list`).
 
 **2. Sprite Inggris minigame.** 366 sprite terbaca; 18 dibuat; paket `block_patch_v1.zip` (331 KB, ada di `Ui menu`). **Belum dipasang dan belum dites di game**; screenshot minigame yang dikirim masih Jepang karena itu. Detail dan perintah pasang di [7.13](#713-minigame-block-kuzushi-dan-dialog-konfirmasi-2026-10-23).
 
